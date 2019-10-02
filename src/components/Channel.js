@@ -25,6 +25,19 @@ class Channel extends React.Component {
     text.value = "";
   };
 
+  pressHandler = event => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      this.props.sendMessage(
+        this.props.match.params.channelID,
+        this.state,
+        this.props.user
+      );
+      let text = document.messageForm.message;
+      text.value = "";
+    }
+  };
+
   componentDidMount() {
     const channelID = this.props.match.params.channelID;
     const channelAvailable = this.props.fetchedChannels.find(
@@ -105,6 +118,7 @@ class Channel extends React.Component {
                   name="message"
                   placeholder={`Message ${channelName}`}
                   onChange={this.changeHandler}
+                  onKeyPress={this.pressHandler}
                 ></textarea>
               </div>
               <div className="col-2" style={{ padding: 0 }}>
