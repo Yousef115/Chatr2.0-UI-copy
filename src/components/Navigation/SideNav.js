@@ -1,5 +1,6 @@
 import React from "react";
 // import { Redirect } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 // Fontawesome
@@ -32,7 +33,7 @@ class SideNav extends React.Component {
 
   submitHandler = event => {
     event.preventDefault();
-    this.props.createChannel(this.state.channelName);
+    this.props.createChannel(this.state.channelName, this.props.history);
     this.toggler();
     // let channelID = "";
     // const channel = this.props.channels.find(
@@ -111,11 +112,14 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     fetchChannels: () => dispatch(fetchAllChannels()),
-    createChannel: channelName => dispatch(createNewChannel(channelName))
+    createChannel: (channelName, history) =>
+      dispatch(createNewChannel(channelName, history))
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SideNav);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(SideNav)
+);

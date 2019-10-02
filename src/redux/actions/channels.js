@@ -43,16 +43,33 @@ export const fetchChannel = (channelID, messages) => {
         type: SET_LOADING
       });
     }
-    fetchMessages(dispatch, channelID, messages);
     clearInterval(interval);
-    interval = setInterval(
-      () => fetchMessages(dispatch, channelID, messages),
-      5000
-    );
+    interval = setInterval(async () => {
+      const lastMessage = messages[messages.length - 1];
+      const timestamp = lastMessage ? lastMessage.timestamp : "";
+      try {
+        const res = await axios.get(
+          `https://api-chatr.herokuapp.com/channels/${channelID}/?latest=${timestamp}`
+        );
+        const messages = res.data;
+        // timestamp =
+        let channelObject = {
+          id: channelID,
+          messages: messages
+        };
+        dispatch({
+          type: FETCH_MESSAGES,
+          payload: channelObject
+        });
+      } catch (error) {
+        console.error(error);
+        // dispatch(setErrors(error));
+      }
+    }, 5000);
   };
 };
 
-export const createNewChannel = channelName => {
+export const createNewChannel = (channelName, history) => {
   return async dispatch => {
     try {
       const newChannel = { name: channelName };
@@ -65,6 +82,7 @@ export const createNewChannel = channelName => {
         type: CREATE_NEW_CHANNEL,
         payload: channel
       });
+      history.push(`/channels/${channel.id}`);
     } catch (error) {
       console.error(error);
       // dispatch(setErrors(error));
@@ -114,26 +132,3 @@ export const sendMessage = (channelID, message, user) => {
 //     }
 //   };
 // };
-
-const fetchMessages = async (dispatch, channelID, messages) => {
-  const lastMessage = messages[messages.length - 1];
-  const timestamp = lastMessage ? lastMessage.timestamp : "";
-  try {
-    const res = await axios.get(
-      `https://api-chatr.herokuapp.com/channels/${channelID}/?latest=${timestamp}`
-    );
-    const messages = res.data;
-    // timestamp =
-    let channelObject = {
-      id: channelID,
-      messages: messages
-    };
-    dispatch({
-      type: FETCH_MESSAGES,
-      payload: channelObject
-    });
-  } catch (error) {
-    console.error(error);
-    // dispatch(setErrors(error));
-  }
-};
