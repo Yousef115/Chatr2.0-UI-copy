@@ -11,7 +11,7 @@ function Welcome(props) {
         <h3 className="mb-5">
           <em>You're gonna need to login to see the messages</em>
         </h3>
-        <Link to="/login" className="btn btn-primary btn-lg">
+        <Link to="/login" className="btn-color btn-lg">
           Login
         </Link>
       </div>

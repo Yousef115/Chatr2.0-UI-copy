@@ -71,7 +71,7 @@ class SideNav extends React.Component {
                   onChange={this.changeHandler}
                 />
                 <input
-                  className="btn btn-success btn-block"
+                  className="btn-color btn-block btn-lg"
                   type="submit"
                   value="Create Channel"
                 />

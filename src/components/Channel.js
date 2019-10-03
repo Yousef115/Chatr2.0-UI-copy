@@ -2,12 +2,14 @@ import React from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import Messages from "./Messages";
+import { Smile } from 'react-feather';
 
 import { fetchChannel, sendMessage } from "../redux/actions";
 
 class Channel extends React.Component {
   state = {
-    message: ""
+    message: "",
+    showEmojiPicker: false,
   };
 
   changeHandler = event => {
@@ -112,7 +114,10 @@ class Channel extends React.Component {
           {messages}
           <form name="messageForm" onSubmit={this.submitHandler}>
             <div className="row">
-              <div className="col-10" style={{ paddingRight: 0 }}>
+              <div className="col-1 float-center" style={{width: "50%" }}>
+              <Smile />
+              </div>
+              <div className="col-9" style={{ paddingRight: 0 }}>
                 <textarea
                   style={{ height: "100%", width: "100%", resize: "none" }}
                   name="message"
