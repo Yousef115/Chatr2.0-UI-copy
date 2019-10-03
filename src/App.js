@@ -19,13 +19,6 @@ class App extends Component {
   }
 
   render() {
-    // if (this.props.loading) {
-    //   return (
-    //     <div>
-    //       <h1>Loading</h1>
-    //     </div>
-    //   );
-    // } else {
     return (
       <div className="content-wrapper">
         <NavBar />

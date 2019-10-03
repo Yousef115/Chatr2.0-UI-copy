@@ -18,13 +18,7 @@ import { fetchAllChannels, createNewChannel } from "../../redux/actions";
 class SideNav extends React.Component {
   state = {
     collapsed: false,
-    toggle: "none",
     channelName: ""
-  };
-
-  toggler = () => {
-    const newToggle = this.state.toggle === "none" ? "block" : "none";
-    this.setState({ toggle: newToggle });
   };
 
   changeHandler = event => {
@@ -34,18 +28,6 @@ class SideNav extends React.Component {
   submitHandler = event => {
     event.preventDefault();
     this.props.createChannel(this.state.channelName, this.props.history);
-    this.toggler();
-    // let channelID = "";
-    // const channel = this.props.channels.find(
-    //   channel => channel.name === this.state.channelName
-    // );
-    // if (!!channel) {
-    //   channelID = channel.id;
-    // }
-    // const channelID = this.props.channels
-    //   .map(channel => channel.id)
-    //   .sort((a, b) => b - a)[0];
-    // return <Redirect to={`/channels/${channelID}`} />;
   };
 
   render() {
@@ -58,24 +40,28 @@ class SideNav extends React.Component {
           <li className="nav-item" data-toggle="tooltip" data-placement="right">
             <div className="nav-link heading">
               <span className="nav-link-text mr-2">Channels</span>
-              <FontAwesomeIcon icon={faPlusCircle} onClick={this.toggler} />
-              <form
-                style={{ display: this.state.toggle }}
-                onSubmit={this.submitHandler}
-              >
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Channel name"
-                  name="channelName"
-                  onChange={this.changeHandler}
-                />
-                <input
-                  className="btn-color btn-block btn-lg"
-                  type="submit"
-                  value="Create Channel"
-                />
-              </form>
+              <FontAwesomeIcon
+                icon={faPlusCircle}
+                data-toggle="collapse"
+                data-target="#createChannelForm"
+                aria-expanded="false"
+              />
+              <div id="createChannelForm" className="collapse">
+                <form onSubmit={this.submitHandler}>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Channel name"
+                    name="channelName"
+                    onChange={this.changeHandler}
+                  />
+                  <input
+                    className="btn btn-success btn-block"
+                    type="submit"
+                    value="Create Channel"
+                  />
+                </form>
+              </div>
             </div>
           </li>
           {channelLinks}

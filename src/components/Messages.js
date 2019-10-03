@@ -22,6 +22,10 @@ const Messages = props => {
   const month = months[timestamp.getMonth()];
   const year = timestamp.getFullYear();
   let hour = timestamp.getHours();
+  if (hour < 10) {
+    hour = "0" + hour;
+  }
+
   let meridiem = "a.m.";
   if (hour > 12) {
     hour -= 12;
@@ -39,26 +43,29 @@ const Messages = props => {
     navigator.clipboard.writeText(copiedText);
   };
 
-  const forwardText = () => {
-    this.setState({ forwardmsg: props.messageObject.message });
-  };
+  // const forwardText = () => {
+  //   this.setState({ forwardmsg: props.messageObject.message });
+  // };
 
   return (
-    <div className="card">
+    <div className="msg-card">
       <h5 className="card-header">
         {props.messageObject.username}
         <small className="float-right">
           {timestamp} | <span className="text-muted">{datestamp}</span>
         </small>
-        <button className="float-right mx-5 btn-sm btn-info" onClick={copyText}>
+        <button
+          className="float-right mx-5 btn-sml btn-primary"
+          onClick={copyText}
+        >
           COPY
         </button>
-        <button
-          className="float-right ml-5 btn-sm btn-primary"
+        {/* <button
+          className="float-right ml-5 btn-sml btn-primary"
           onClick={forwardText}
         >
           FORWARD
-        </button>
+        </button> */}
       </h5>
       <div className="card-body">
         <p className="card-text">{props.messageObject.message}</p>

@@ -76,7 +76,7 @@ class RegistationForm extends Component {
             </div>
             {this.errorHandler()}
             <input
-              className="btn btn-primary"
+              className="btn-color"
               type="submit"
               value={type.replace(/^\w/, c => c.toUpperCase())}
             />
